@@ -1,0 +1,24 @@
+version: "3.7"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: web.Dockerfile
+      args:
+        buildno: 1
+        env: "prod"
+    networks:
+      - reverse-proxy
+      - back
+    restart: always
+    environment:
+      - VIRTUAL_PORT=1237
+      - VIRTUAL_HOST=web.staging-360.claimdi.com
+      - LETSENCRYPT_HOST=web.staging-360.claimdi.com
+      - LETSENCRYPT_EMAIL=panupong@anywheretogo.com
+networks:
+  reverse-proxy:
+    external:
+      name: reverse-proxy
+  back:
+    driver: bridge

@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: web.Dockerfile
+      args:
+        buildno: 1
+        env: "prod"
+    networks:
+      - reverse-proxy
+      - back
+    restart: always
+    environment:
+      - VIRTUAL_HOST=360-web.claimdi.com
+networks:
+  reverse-proxy:
+    external:
+      name: sandbox_network
+  back:
+    driver: bridge
